@@ -1,0 +1,31 @@
+# Blueprint para Evolution API en Render (Plan Gratuito)
+# Este servicio utilizará tu base de datos 'n8n-db' existente.
+
+services:
+  - type: web
+    name: evolution-api-service # Nombre para tu servicio de Evolution API
+    plan: free # Plan Gratuito (se "dormirá" si no hay tráfico)
+    runtime: image
+    image:
+      url: evopx/evolution-api:latest # Imagen oficial de Docker de Evolution API
+    region: oregon # Asegúrate de que esta región coincida con tu base de datos de n8n
+
+    envVars:
+      - key: DATABASE_URL # Conexión a tu base de datos 'n8n-db' existente
+        fromDatabase:
+          name: n8n-db
+          property: connectionString
+      - key: JWT_SECRET # Clave secreta para Evolution API (se genera automáticamente)
+        generateValue: true
+      - key: SECRET_KEY # Otra clave secreta para Evolution API (se genera automáticamente)
+        generateValue: true
+      - key: WEBHOOK_URL # URL a la que Evolution API enviará los mensajes recibidos
+        value: https://n8n-service-pbqp.onrender.com/webhook/evolution-api-webhook # <--- ¡IMPORTANTE! n8n escuchará aquí
+      - key: WEBHOOK_SECRET # Clave para asegurar los webhooks (se genera automáticamente)
+        generateValue: true
+      - key: PORT # El puerto que Evolution API usará dentro del contenedor
+        value: 10000 # Un puerto común para servicios web en Render
+
+# NOTA: No definimos una sección 'databases' en este archivo
+# porque estamos usando tu 'n8n-db' existente, que ya está gestionada
+# por el Blueprint de tu servicio n8n principal.
