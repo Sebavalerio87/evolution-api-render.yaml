@@ -7,7 +7,7 @@ services:
     plan: free # Plan Gratuito (se "dormirá" si no hay tráfico)
     runtime: image
     image:
-      url: evopx/evolution-api:latest # Imagen oficial de Docker de Evolution API
+      url: evolutionapiofficial/evolution-api:latest # Nueva imagen oficial de Docker de Evolution API
     region: oregon # Asegúrate de que esta región coincida con tu base de datos de n8n
 
     envVars:
@@ -29,3 +29,5 @@ services:
 # NOTA: No definimos una sección 'databases' en este archivo
 # porque estamos usando tu 'n8n-db' existente, que ya está gestionada
 # por el Blueprint de tu servicio n8n principal.
+       
+       
